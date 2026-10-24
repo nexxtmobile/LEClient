@@ -90,7 +90,7 @@ class LEAccount
      *
      * @param array 	$email 	The array of strings containing e-mail addresses.
      *
-     * @return object	Returns the new account URL when the account was successfully created, false if not.
+     * @return string	Returns the new account URL when the account was successfully created, false if not.
      */
 	private function createLEAccount($email)
 	{
@@ -108,7 +108,7 @@ class LEAccount
     /**
      * Gets the LetsEncrypt account URL associated with the stored account keys.
      *
-     * @return object	Returns the account URL if it is found, or false when none is found.
+     * @return string	Returns the account URL if it is found, or false when none is found.
      */
 	private function getLEAccount()
 	{
@@ -133,9 +133,9 @@ class LEAccount
 		{
 			$this->id = isset($post['body']['id']) ? $post['body']['id'] : '';
 			$this->key = $post['body']['key'];
-			$this->contact = $post['body']['contact'];
+			$this->contact = $post['body']['contact'] ?? '';
 			$this->agreement = isset($post['body']['agreement']) ? $post['body']['agreement'] : '';
-			$this->initialIp = $post['body']['initialIp'];
+			$this->initialIp = $post['body']['initialIp'] ?? '';
 			$this->createdAt = $post['body']['createdAt'];
 			$this->status = $post['body']['status'];
 		}
@@ -162,9 +162,9 @@ class LEAccount
 		{
 			$this->id = isset($post['body']['id']) ? $post['body']['id'] : '';
 			$this->key = $post['body']['key'];
-			$this->contact = $post['body']['contact'];
+			$this->contact = $post['body']['contact'] ?? '';
 			$this->agreement = isset($post['body']['agreement']) ? $post['body']['agreement'] : '';
-			$this->initialIp = $post['body']['initialIp'];
+			$this->initialIp = $post['body']['initialIp'] ?? '';
 			$this->createdAt = $post['body']['createdAt'];
 			$this->status = $post['body']['status'];
 			if($this->log instanceof \Psr\Log\LoggerInterface) 

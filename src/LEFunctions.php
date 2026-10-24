@@ -84,7 +84,7 @@ class LEFunctions
 		file_put_contents($privateKeyFile, $privateKey);
 		file_put_contents($publicKeyFile, $details['key']);
 
-		openssl_pkey_free($res);
+		//openssl_pkey_free($res);
 	}
 
     /**
@@ -129,7 +129,7 @@ class LEFunctions
 		file_put_contents($privateKeyFile, $privateKey);
 		file_put_contents($publicKeyFile, $details['key']);
 
-		openssl_pkey_free($res);
+		//openssl_pkey_free($res);
 	}
 
 
@@ -168,7 +168,7 @@ class LEFunctions
     /**
      * Outputs a log message.
      *
-     * @param object	$data		The data to print.
+     * @param string	$data		The data to print.
      * @param string	$function	The function name to print above. Defaults to the calling function's name from the stacktrace. (optional)
      */
 	public static function log($data, $function = '')
@@ -224,6 +224,7 @@ class LEFunctions
      */
 	public static function checkDNSChallenge($domain, $DNSDigest)
 	{
+		/*
 		$requestURL = 'https://dns.google.com/resolve?name=_acme-challenge.' . $domain . '&type=TXT';
 		$handle = curl_init();
         curl_setopt($handle, CURLOPT_URL, $requestURL);
@@ -241,6 +242,13 @@ class LEFunctions
 			}
 		}
 		return false;
+		*/
+
+		$domainData = dns_get_record( '_acme-challenge.' . $domain, DNS_TXT );
+
+		if ( empty( $domainData ) || !in_array( $DNSDigest, array_column( $domainData, 'txt' ) ) ) return false;
+
+		return true;
 	}
 
     /**

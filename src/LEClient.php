@@ -49,7 +49,9 @@ class LEClient
 	private $account;
 	
 	private $sourceIp = false;
-	
+
+	private $baseURL;
+
 	private $log;
 
 	const LOG_OFF = 0;		// Logs no messages or faults, except Runtime Exceptions.

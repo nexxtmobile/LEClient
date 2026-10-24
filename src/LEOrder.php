@@ -74,7 +74,7 @@ class LEOrder
      * @param string 		$notBefore 			A date string formatted like 0000-00-00T00:00:00Z (yyyy-mm-dd hh:mm:ss) at which the certificate becomes valid.
      * @param string 		$notAfter 			A date string formatted like 0000-00-00T00:00:00Z (yyyy-mm-dd hh:mm:ss) until which the certificate is valid.
      */
-    public function __construct($connector, $log, $certificateKeys, $basename, $domains, $keyType = 'rsa-4096', $notBefore, $notAfter)
+    public function __construct($connector, $log, $certificateKeys, $basename, $domains, $keyType = 'rsa-4096', $notBefore = '', $notAfter = '')
     {
         $this->connector = $connector;
         $this->basename = $basename;
@@ -689,6 +689,13 @@ class LEOrder
             if(!empty($this->certificateURL))
             {
                 $post = $this->postCertificateRequest($this->certificateURL);
+
+				if($this->log instanceof \Psr\Log\LoggerInterface)
+				{
+					$this->log->info('Certificates string for \'' . $this->basename . '\' is:' . print_r($post, true));
+				}
+				elseif($this->log >= LEClient::LOG_STATUS) LEFunctions::log('Certificates string for \'' . $this->basename . '\' is:' . print_r($post, true), 'function getCertificate');
+
                 $certificates = $this->validateCertificateResponse($post);
                 if (false === $certificates) {
                     return false;
@@ -844,10 +851,26 @@ class LEOrder
         {
             if(preg_match_all('~(-----BEGIN\sCERTIFICATE-----[\s\S]+?-----END\sCERTIFICATE-----)~i', $response['body'], $matches))
             {
+				if($this->log instanceof \Psr\Log\LoggerInterface)
+				{
+					$this->log->info('Certificates $matches for \'' . $this->basename . '\' is:' . print_r($matches, true));
+				}
+				elseif($this->log >= LEClient::LOG_STATUS) LEFunctions::log('Certificates $matches for \'' . $this->basename . '\' is:' . print_r($matches, true), 'function getCertificate');
+
+				/*
                 return [
                     'leaf' => $matches[0][0],
                     'intermediate' => $matches[0][1],
                 ];
+				*/
+
+				$certificates = array( 'leaf' => $matches[0][0], 'intermediate' => '' );
+
+				if ( !empty( $matches[0][1] ) ) for ( $i = 1; $i < count( $matches[0] ); $i++ ) $certificates['intermediate'] .= $matches[0][$i] . "\n";
+
+				if ( !empty( $certificates['intermediate'] ) ) $certificates['intermediate'] = trim( $certificates['intermediate'] );
+
+				return $certificates;
             }
             else
             {
