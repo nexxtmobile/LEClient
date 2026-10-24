@@ -1,10 +1,11 @@
 {
-    "name": "yourivw/leclient",
+    "name": "nexxtmobile/leclient",
     "type": "library",
-    "description": "PHP LetsEncrypt client library for ACME v2",
+    "description": "PHP LetsEncrypt client library for ACME v2 (maintained fork of yourivw/leclient)",
+    "homepage": "https://github.com/nexxtmobile/LEClient",
     "license": "MIT",
     "require": {
-        "php": ">=5.2",
+        "php": ">=8.0",
         "ext-openssl": "*"
     },
     "autoload": {

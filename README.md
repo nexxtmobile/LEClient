@@ -1,8 +1,8 @@
 # LEClient
 
-[![Latest Stable Version](https://poser.pugx.org/yourivw/leclient/v/stable)](https://packagist.org/packages/yourivw/leclient)
-[![Total Downloads](https://poser.pugx.org/yourivw/leclient/downloads)](https://packagist.org/packages/yourivw/leclient)
-[![License](https://poser.pugx.org/yourivw/leclient/license)](https://packagist.org/packages/yourivw/leclient)
+> **Maintained fork** of [yourivw/LEClient](https://github.com/yourivw/LEClient), which is abandoned since 1.3.0.
+> This fork keeps the `LEClient\` namespace and carries fixes for current PHP versions.
+> Install via Composer with a VCS repository pointing to `https://github.com/nexxtmobile/LEClient` and require `nexxtmobile/leclient`.
 
 &nbsp;
 
@@ -10,7 +10,7 @@ PHP LetsEncrypt client library for ACME v2. The aim of this client is to make an
 
 ## Current version
 
-The current version is 1.2.2
+The current version is 1.4.0
 
 ## Getting Started
 
